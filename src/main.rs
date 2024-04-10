@@ -3,7 +3,6 @@
     nscan -t [num_threads] [ip_addr]
  */
 
-use core::num;
 use std::{env, net::{IpAddr, TcpStream}, io::{self, Write}, str::FromStr, process, sync::mpsc::{Sender, channel}, thread};
 
 struct Arguments {
