@@ -4,8 +4,10 @@
  */
 mod scan; 
 mod args;
-use std::{env, process, sync::mpsc::channel, thread};
+use std::{env, process, sync::mpsc::{channel, Receiver}, thread};
 use ctrlc;
+
+use crate::args::Arguments;
 
 fn main() {
 
@@ -15,9 +17,9 @@ fn main() {
     .expect("Error setting Ctrl-C handler");
 
     let args: Vec<String> = env::args().collect();
-    let program = args[0].clone();
-    let arguments = args::Arguments::new(&args).unwrap_or_else(
-        |err| {
+    let program:String = args[0].clone();
+    let arguments: Arguments = args::Arguments::new(&args).unwrap_or_else(
+        |err: &str| {
             if err.contains("help"){
                 process::exit(0);
             } else {
@@ -27,7 +29,7 @@ fn main() {
         }
     );
 
-    let num_thrds = arguments.threads;
+    let num_thrds: u16 = arguments.threads;
     let addr = arguments.ipaddr;
     let verb: bool = arguments.verbose;
     let(tx, rx) = channel();
