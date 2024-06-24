@@ -4,7 +4,7 @@
  */
 mod scan; 
 mod args;
-use std::{env, process, sync::mpsc::{channel, Receiver}, thread};
+use std::{env, process, sync::mpsc::channel, thread};
 use ctrlc;
 
 use crate::args::Arguments;
